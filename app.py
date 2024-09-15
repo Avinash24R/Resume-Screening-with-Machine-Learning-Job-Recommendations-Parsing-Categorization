@@ -221,6 +221,38 @@ def extract_name_from_resume(text):
         name = match.group()
 
     return name
+def process_resume(resume_text):
+    # This function takes text as input
+
+    # And Outputs a hashmap ,which can be use in the html file.
+    # Determine if education information exists
+    education_info = extract_education_from_resume(resume_text)
+    education_exists = bool(education_info)  # True if education_info is not empty, else False
+    skills_info = extract_skills_from_resume(resume_text)
+    skills_exists = bool(skills_info)
+    name_info = extract_name_from_resume(resume_text)
+    name_exists = bool(name_info)
+    phone_info = extract_contact_number_from_resume(resume_text)
+    phone_exists = bool(phone_info)
+    email_info = extract_email_from_resume(resume_text)
+    email_exists = bool(email_info)
+    # Other processing steps (if any)
+
+    return {
+        # Other details you're processing
+        'education_exists': education_exists,
+        'education_info': education_info,
+        'skills_exists':skills_exists,
+        'skills_info':skills_info,
+        'phone_exists':phone_exists,
+        'phone_info': phone_info,
+        'name_exists':name_exists,
+        'name_info':name_info,
+        'email_exists':email_exists,
+        'email_info':email_info,
+
+    }
+
 
 
 
@@ -244,7 +276,7 @@ def pred():
             text = file.read().decode('utf-8')
         else:
             return render_template('resume.html', message="Invalid file format. Please upload a PDF or TXT file.")
-
+        resume_data = process_resume(text)
         predicted_category = predict_category(text)
         recommended_job = job_recommendation(text)
         phone = extract_contact_number_from_resume(text)
@@ -254,8 +286,7 @@ def pred():
         extracted_education = extract_education_from_resume(text)
         name = extract_name_from_resume(text)
 
-        return render_template('resume.html', predicted_category=predicted_category,recommended_job=recommended_job,
-                               phone=phone,name=name,email=email,extracted_skills=extracted_skills,extracted_education=extracted_education)
+        return render_template('resume.html', predicted_category=predicted_category,recommended_job=recommended_job,resume_data=resume_data)
     else:
         return render_template("resume.html", message="No resume file uploaded.")
 

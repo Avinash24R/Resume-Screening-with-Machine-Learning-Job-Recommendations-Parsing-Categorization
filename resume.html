@@ -86,32 +86,46 @@
         <br>
         <hr>
         <h1 class="text-center">Extracted Information</h1>
-        <p class="text-center"><b><strong>Name:</strong></b> {{name}}</p>
-        <p class="text-center"><b><strong>Phone No:</strong></b> {{phone}}</p>
-        <p class="text-center"><b><strong>Email:</strong></b> {{email}}</p>
-        {% if extracted_skills %}
-        <p class="text-center"><b><strong>Skills</strong></b></p>
+        {% if resume_data['name_exists'] %}
+        <p class="text-center"><b><strong>Name:</strong></b> {{resume_data['name_info']}}</p>
+        {% else %}
+        <p class="text-center">No Name founds.........</p>
+        {% endif %}
+        {% if resume_data['phone_exists'] %}
+        <p class="text-center"><b><strong>Phone No:</strong></b> {{resume_data['phone_info']}}</p>
+        {% else %}
+        <p class="text-center">No Phone Number founds.........</p>
+        {% endif %}
+        {% if resume_data['email_exists'] %}
+        <p class="text-center"><b><strong>Email:</strong></b> {{resume_data['email_info']}}</p>
+        {% else %}
+        <p class="text-center">No email founds.........</p>
+        {% endif %}
+        {% if resume_data['skills_exists'] %}
+        <h1 class="text-center">skills:</h1>
         <ul class="list-unstyled text-center">
-            {% for skill in extracted_skills %}
+            {% for skill in resume_data['skills_info'] %}
             <li>{{ skill }}</li>
             {% endfor %}
         </ul>
         {% else %}
         <p class="text-center">No skills founds.........</p>
-        <br>
-        {% if extracted_education %}
+        {%endif%}
+        {% if resume_data['education_exists'] %}
         <h1 class="text-center">Education:</h1>
         <ul class="list-unstyled text-center">
-            {% for edu in extracted_education %}
-            <li>{{ edu }}</li>
+            {% for edu_item in resume_data['education_info'] %}
+                <li>{{ edu_item }}</li>
             {% endfor %}
         </ul>
         {% else %}
-        <p class="text-center">No Education founds.........</p>
-        <br>
+            <p class="text-center">No Education founds.........</p>
+            <br>
         {% endif %}
+
         {% endif %}
-        {% endif %}
+        
+
 
     </div>
 
